@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fathom-shell"
+version = "0.1.0"
+description = "An AI-native shell that reads your command output and logs, then suggests the next 3-4 moves. Works fully offline."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Rishabh Bhardwaj" }]
+keywords = ["shell", "terminal", "ai", "llm", "ollama", "offline", "devops", "cli", "copilot", "sre"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Topic :: System :: Shells",
+  "Topic :: Utilities",
+]
+# Zero required runtime dependencies: installs on air-gapped servers with nothing but Python.
+dependencies = [
+  "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+pretty = ["rich>=13"]
+dev = ["pytest>=7", "ruff>=0.5"]
+
+[project.urls]
+Homepage = "https://github.com/YOUR_GITHUB_USERNAME/fathom"
+Issues = "https://github.com/YOUR_GITHUB_USERNAME/fathom/issues"
+
+[project.scripts]
+fathom = "fathom.cli:main"
+fth = "fathom.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B"]
+ignore = ["E501", "B008"]

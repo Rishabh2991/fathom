@@ -1,0 +1,46 @@
+name: Release
+
+# Push a tag like v0.1.0 to publish to PyPI and attach standalone binaries
+# (no Python needed on the target machine — ideal for air-gapped servers).
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write   # PyPI trusted publishing
+
+jobs:
+  binaries:
+    strategy:
+      matrix:
+        include:
+          - { os: ubuntu-latest, name: fathom-linux-x86_64 }
+          - { os: ubuntu-24.04-arm, name: fathom-linux-arm64 }
+          - { os: macos-latest, name: fathom-macos-arm64 }
+          - { os: macos-13, name: fathom-macos-x86_64 }
+          - { os: windows-latest, name: fathom-windows-x86_64.exe }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install . pyinstaller
+      - run: pyinstaller --onefile --name fathom --collect-submodules fathom src/fathom/__main__.py
+      - name: Rename
+        shell: bash
+        run: mv dist/fathom* "dist/${{ matrix.name }}"
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/${{ matrix.name }}
+          generate_release_notes: true
+
+  pypi:
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install build && python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1

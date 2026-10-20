@@ -1,0 +1,16 @@
+name: Rule request — "the fix for this error is always…"
+description: Teach Fathom's offline engine a new error pattern
+labels: [new-rule, good first issue]
+body:
+  - type: input
+    id: cmd
+    attributes: { label: Command, placeholder: "terraform apply" }
+    validations: { required: true }
+  - type: textarea
+    id: output
+    attributes: { label: Exact error output (redact secrets), render: text }
+    validations: { required: true }
+  - type: textarea
+    id: fix
+    attributes: { label: The 1-3 commands you'd run next, render: shell }
+    validations: { required: true }

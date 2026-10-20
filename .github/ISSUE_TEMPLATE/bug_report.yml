@@ -1,0 +1,15 @@
+name: Bug report
+description: Something broke or a suggestion was wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes: { label: What happened?, description: Include the command you ran and the suggestions shown. }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: What should Fathom have suggested? }
+  - type: input
+    id: env
+    attributes: { label: "Output of `fathom doctor`", placeholder: "version / OS / providers" }
+    validations: { required: true }
