@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -22,6 +23,12 @@ def config_dir() -> Path:
         return base / "fathom"
     base = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
     return base / "fathom"
+
+
+def normalize_localhost(url: str) -> str:
+    if not url:
+        return url
+    return re.sub(r"(?<=://)localhost(?=[:/]|$)", "127.0.0.1", url)
 
 
 DEFAULT_TOML = """# Fathom configuration
@@ -45,11 +52,11 @@ redact = true
 learn = true
 
 [ollama]
-host = "http://localhost:11434"
+host = "http://127.0.0.1:11434"
 model = "qwen2.5-coder:3b"
 
 [openai]   # any OpenAI-compatible server: OpenAI, llama.cpp server, LM Studio, vLLM
-base_url = "http://localhost:8080/v1"
+base_url = "http://127.0.0.1:8080/v1"
 model = "local-model"
 api_key_env = "OPENAI_API_KEY"
 
@@ -68,10 +75,14 @@ class Settings:
     redact: bool = True
     learn: bool = True
     timeout: float = 20.0
-    ollama: dict = field(default_factory=lambda: {"host": "http://localhost:11434", "model": "qwen2.5-coder:3b"})
+    ollama: dict = field(default_factory=lambda: {"host": "http://127.0.0.1:11434", "model": "qwen2.5-coder:3b"})
     openai: dict = field(default_factory=lambda: {
-        "base_url": "http://localhost:8080/v1", "model": "local-model", "api_key_env": "OPENAI_API_KEY"})
+        "base_url": "http://127.0.0.1:8080/v1", "model": "local-model", "api_key_env": "OPENAI_API_KEY"})
     anthropic: dict = field(default_factory=lambda: {"model": "claude-haiku-5-5", "api_key_env": "ANTHROPIC_API_KEY"})
+
+    def __post_init__(self):
+        self.ollama["host"] = normalize_localhost(self.ollama.get("host", "http://127.0.0.1:11434"))
+        self.openai["base_url"] = normalize_localhost(self.openai.get("base_url", "http://127.0.0.1:8080/v1"))
 
     @property
     def offline(self) -> bool:
@@ -108,6 +119,7 @@ def load_settings(path: Path | None = None) -> Settings:
         s.providers = [p.strip() for p in env_providers.split(",") if p.strip()]
     if os.environ.get("FATHOM_MODEL"):
         s.ollama["model"] = os.environ["FATHOM_MODEL"]
+    s.__post_init__()
     if s.offline:
         # Offline mode: only providers that never leave the machine.
         s.providers = [p for p in s.providers if p in ("ollama", "rules", "openai-local")] or ["rules"]

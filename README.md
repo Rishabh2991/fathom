@@ -99,11 +99,11 @@ redact = true
 learn = true
 
 [ollama]
-host = "http://localhost:11434"
+host = "http://127.0.0.1:11434"
 model = "qwen2.5-coder:3b"
 
 [openai]          # OpenAI, llama.cpp server, LM Studio, vLLM...
-base_url = "http://localhost:8080/v1"
+base_url = "http://127.0.0.1:8080/v1"
 model = "local-model"
 
 [anthropic]

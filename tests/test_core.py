@@ -169,6 +169,14 @@ def test_offline_env_strips_cloud(monkeypatch, tmp_path):
     assert load_settings().providers == ["ollama", "rules"]
 
 
+def test_localhost_uses_ipv4_for_ollama(monkeypatch, tmp_path):
+    monkeypatch.setenv("FATHOM_HOME", str(tmp_path))
+    cfg = tmp_path / "config.toml"
+    cfg.write_text('[ollama]\nhost = "http://localhost:11434"\nmodel = "qwen2.5-coder:3b"\n', encoding='utf-8')
+    s = load_settings(cfg)
+    assert s.ollama["host"] == "http://127.0.0.1:11434"
+
+
 # ---------------- memory ----------------
 def test_memory_learns_choice(tmp_path):
     m = Memory(tmp_path / "mem.jsonl")
