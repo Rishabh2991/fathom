@@ -8,8 +8,8 @@ Remove this file from the repo after launch if you prefer, or keep it as a maint
 ```bash
 cd fathom
 # 1. Replace the placeholder everywhere
-grep -rl YOUR_GITHUB_USERNAME . | xargs sed -i '' 's/YOUR_GITHUB_USERNAME/<your-username>/g'   # macOS
-# grep -rl YOUR_GITHUB_USERNAME . | xargs sed -i 's/YOUR_GITHUB_USERNAME/<your-username>/g'   # Linux
+grep -rl Rishabh2991 . | xargs sed -i '' 's/Rishabh2991/<your-username>/g'   # macOS
+# grep -rl Rishabh2991 . | xargs sed -i 's/Rishabh2991/<your-username>/g'   # Linux
 
 # 2. Create the GitHub repo and push (needs the GitHub CLI: https://cli.github.com)
 gh repo create fathom --public --source . --remote origin \

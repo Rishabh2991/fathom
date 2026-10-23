@@ -34,8 +34,8 @@ pretty = ["rich>=13"]
 dev = ["pytest>=7", "ruff>=0.5"]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_GITHUB_USERNAME/fathom"
-Issues = "https://github.com/YOUR_GITHUB_USERNAME/fathom/issues"
+Homepage = "https://github.com/Rishabh2991/fathom"
+Issues = "https://github.com/Rishabh2991/fathom/issues"
 
 [project.scripts]
 fathom = "fathom.cli:main"

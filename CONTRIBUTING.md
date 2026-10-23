@@ -6,7 +6,7 @@ dependencies, and the most valuable contributions are small.
 ## Setup
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/fathom && cd fathom
+git clone https://github.com/Rishabh2991/fathom && cd fathom
 python3 -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev]"
 pytest -q && ruff check src tests

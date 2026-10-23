@@ -7,7 +7,7 @@ Run a command. Fathom reads the output, figures out what just happened, and offe
 
 Works on your laptop and on a headless server over SSH. Works with no internet, no GPU and no model at all.
 
-[![CI](https://github.com/YOUR_GITHUB_USERNAME/fathom/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/fathom/actions/workflows/ci.yml)
+[![CI](https://github.com/Rishabh2991/fathom/actions/workflows/ci.yml/badge.svg)](https://github.com/Rishabh2991/fathom/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/fathom-shell)](https://pypi.org/project/fathom-shell/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Platforms](https://img.shields.io/badge/platforms-linux%20%7C%20macOS%20%7C%20windows-informational)

@@ -1,8 +1,8 @@
 #!/bin/sh
-# Fathom installer: curl -fsSL https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/fathom/main/install.sh | sh
+# Fathom installer: curl -fsSL https://raw.githubusercontent.com/Rishabh2991/fathom/main/install.sh | sh
 # Prefers pipx/pip; falls back to the standalone binary from GitHub Releases.
 set -eu
-REPO="YOUR_GITHUB_USERNAME/fathom"
+REPO="Rishabh2991/fathom"
 
 if command -v pipx >/dev/null 2>&1; then
   pipx install fathom-shell && exec fathom doctor
